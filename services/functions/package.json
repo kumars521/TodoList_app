@@ -1,0 +1,31 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/functions/src/functions/**/*.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "watch": "tsc --watch",
+    "migrate": "npm run build && node dist/functions/src/database/migrate.js",
+    "start": "func start --typescript",
+    "test": "vitest run",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@app/shared": "file:../shared",
+    "@azure/functions": "^4.6.0",
+    "dotenv": "^16.4.5",
+    "pg": "^8.23.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.23.1",
+    "azure-functions-core-tools": "^4.14.0",
+    "rimraf": "^6.0.0",
+    "typescript": "^5.6.3",
+    "vitest": "^5.0.1"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "todonew",
+  "private": true,
+  "workspaces": [
+    "services/*"
+  ],
+  "scripts": {
+    "build": "npm --prefix services/shared run build && npm --prefix services/functions run build && npm --prefix services/web run build",
+    "dev:func": "npm --prefix services/functions run start",
+    "dev:web": "npm --prefix services/web run dev -- --host 0.0.0.0",
+    "lint": "npm --prefix services/functions run lint && npm --prefix services/web run lint",
+    "emulators:start": "docker compose up -d",
+    "emulators:stop": "docker compose down",
+    "emulators:clean": "docker compose down -v",
+    "db:migrate": "npm --prefix services/functions run migrate"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2"
+  }
+}

@@ -1,0 +1,4 @@
+.env
+.azurite/
+**/node_modules/
+**/dist/

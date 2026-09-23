@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: todonew-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: todonew
+      POSTGRES_PASSWORD: todonew
+      POSTGRES_DB: todonew
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todonew -d todonew"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: todonew-azurite
+    restart: unless-stopped
+    command: azurite --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --tableHost 0.0.0.0 --tablePort 10002
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
