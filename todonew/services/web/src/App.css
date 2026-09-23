@@ -1,0 +1,21 @@
+button,
+input,
+select {
+  font: inherit;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border-bottom: 1px solid #d8e0ec;
+}
+
+@media (max-width: 980px) {
+  .root {
+    flex-direction: column;
+  }
+}

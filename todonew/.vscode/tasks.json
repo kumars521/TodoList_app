@@ -1,0 +1,131 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+        "label": "Start Emulators",
+        "type": "shell",
+        "command": "docker compose up -d",
+        "options": {
+            "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "label": "tasks-api: npm install",
+        "type": "shell",
+        "command": "npm install",
+        "options": {
+            "cwd": "${workspaceFolder}/services/functions"
+        },
+        "problemMatcher": [],
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "label": "tasks-api: npm clean",
+        "type": "shell",
+        "command": "npm run clean",
+        "options": {
+            "cwd": "${workspaceFolder}/services/functions"
+        },
+        "problemMatcher": [],
+        "dependsOn": [
+            "tasks-api: npm install"
+        ],
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "label": "tasks-api: npm watch",
+        "type": "shell",
+        "command": "npm run watch",
+        "options": {
+            "cwd": "${workspaceFolder}/services/functions"
+        },
+        "isBackground": true,
+        "problemMatcher": "$tsc-watch",
+        "dependsOn": [
+            "tasks-api: npm clean"
+        ],
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "label": "tasks-api: func host start",
+        "type": "func",
+        "command": "host start",
+        "options": {
+            "cwd": "${workspaceFolder}/services/functions",
+            "env": {
+                "languageWorkers__node__arguments": "--inspect=9229"
+            }
+        },
+        "isBackground": true,
+        "problemMatcher": "$func-node-watch",
+        "dependsOn": [
+            "tasks-api: npm watch",
+            "Start Emulators"
+        ],
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "label": "taskflow-web: dev",
+        "type": "shell",
+        "command": "npm run dev -- --host 0.0.0.0 --port 5173",
+        "options": {
+            "cwd": "${workspaceFolder}/services/web"
+        },
+        "isBackground": true,
+        "problemMatcher": {
+            "owner": "vite",
+            "severity": "info",
+            "pattern": {
+                "regexp": "^$"
+            },
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": "^VITE|^.*Local:",
+                "endsPattern": "^.*Local:.*$"
+            }
+        },
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "label": "start-debug-all",
+        "dependsOn": [
+            "tasks-api: func host start",
+            "taskflow-web: dev"
+        ],
+        "dependsOrder": "sequence",
+        "runOptions": {
+            "instanceLimit": 1,
+            "instancePolicy": "silent"
+        }
+    },
+    {
+        "type": "npm",
+        "script": "build",
+        "path": "services/functions",
+        "group": "build",
+        "problemMatcher": [],
+        "label": "npm: build - services/functions",
+        "detail": "tsc -p tsconfig.json"
+    }
+]
+}

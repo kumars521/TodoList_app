@@ -1,0 +1,15 @@
+-- CREATE TABLE IF NOT EXISTS tasks (
+--   id UUID PRIMARY KEY,
+--   title TEXT NOT NULL CHECK (length(trim(title)) > 0),
+--   description TEXT NOT NULL DEFAULT '',
+--   project TEXT NOT NULL CHECK (length(trim(project)) > 0),
+--   priority TEXT NOT NULL DEFAULT 'Medium' CHECK (priority IN ('Low', 'Medium', 'High')),
+--   status TEXT NOT NULL DEFAULT 'Todo' CHECK (status IN ('Todo', 'In Progress', 'Review', 'Done')),
+--   due_date DATE,
+--   assignee TEXT,
+--   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--   updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- CREATE INDEX IF NOT EXISTS tasks_status_idx ON tasks (status);
+-- CREATE INDEX IF NOT EXISTS tasks_due_date_idx ON tasks (due_date);

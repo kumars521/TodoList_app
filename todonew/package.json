@@ -1,0 +1,10 @@
+{
+  "name": "todonew-local-debug",
+  "private": true,
+  "scripts": {
+    "emulators:start": "docker compose up -d",
+    "emulators:stop": "docker compose down",
+    "emulators:clean": "docker compose down -v && rm -rf .azurite",
+    "db:migrate": "DB_USER=${POSTGRES_USER:-postgres} DB_PASSWORD=${POSTGRES_PASSWORD:-postgres} DB_HOST=${DB_HOST:-localhost} DB_PORT=${DB_PORT:-5432} DB_NAME=${POSTGRES_DB:-localdev} npm --prefix services/functions run migrate"
+  }
+}
